@@ -85,6 +85,7 @@ where SubjectID = 'S001' and Theory < 10
 --> Hiển thị danh sách sinh viên học lớp AV1 sinh sau ngày 1/1/1980
 select StudentID,StudentName,Class from Students
 where Class = 'AV1' and DateofBirth > '1/1/1980' 
+
 -->Xóa sinh viên có mã AV0807011
 delete from Mark where StudentID = 'AV0807011'
 delete from Students where StudentID = 'AV0807011'

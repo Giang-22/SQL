@@ -192,7 +192,7 @@ as
 	select * from vw_DSSinhVien
 	select * from vw_DSSinhVien where QueQuan = N'Hà Nội'
 
---vd2,
+--vd2, Tạo view đưa ra Mã Sinh Viên, Họ Tên , Quê quán và Mã Giáo viên của các sinh viên học lớp Hệ thống thông tin 02
 create view vw_DSSinhVien1
 as 
 	select MaSV,Hoten, QueQuan, MaGV
