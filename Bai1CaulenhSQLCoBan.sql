@@ -1,4 +1,4 @@
-﻿
+﻿use master
 create database QLBanHang
 use QLBanHang
 create table SanPham(

@@ -302,3 +302,71 @@ go
 
 exec sp_VD7 'SV98'
 exec sp_VD7 'SV030'
+
+-->vd11. viết 1 thủ tục thêm mới 1 sinh viên, với các tham biến
+-->masv,hoten,quequan,gioitinh,ngaysinh,malop nhập từ bàn phím.
+-->hãy kiểm tra xem malop có trong bảng Lớp hay không? Nếu không thì đưa ra
+-->thông báo Mã lỗi 1. Hãy kiểm tra xem masv đã tồn tại trong bảng sv chưa?
+-->Nếu rồi thì đưa ra TB Mã lỗi 2, ngược lại đưa về mã lỗi 0.
+go
+create proc sp_VD11(@MaSV nchar(10),@HoTen nvarchar(30),@QueQuan nvarchar(30),@GioiTinh nchar(10),@NgaySinh date,@MaLop nchar(10),@Returned int output)
+as
+begin
+	if(not exists(select *from Lop where MaLop = @MaLop))
+		set @Returned = 1
+	else if(exists(select *from SinhVien where MaSV = @MaSV))
+		set @Returned = 2
+	else
+		begin
+			insert into SinhVien values(@MaSV,@HoTen,@GioiTinh,@QueQuan,@NgaySinh,@MaLop)
+		set @Returned =0
+		end
+	return @Returned
+end
+go
+go
+declare @x int
+exec sp_VD11 'SV01',N'Nguyễn Văn Anh',N'Nghệ An',N'Nam','09-30-2005','IT01',@x output
+select @x
+go
+go
+declare @x int
+exec sp_VD11 'SV07',N'Nguyễn Văn Anh',N'Nghệ An',N'Nam','09-30-2005','IT07',@x output
+select @x
+go
+go
+declare @x int
+exec sp_VD11 'SV035',N'Nguyễn Văn Anh',N'Nghệ An',N'Nam','09-30-2005','CP04',@x output
+select @x
+go
+
+go
+create proc sp_VD12(@MaLop nchar(10),@TenLop nvarchar(30),@Phong nvarchar(30),@MaGV nchar(10),@Returned int output)
+as
+begin 
+	if(not exists(select *from GiaoVien where MaGV = @MaGV))
+		set @Returned = 1
+	else if(exists(select *from Lop where TenLop = @TenLop))
+		set @Returned = 2
+	else
+		begin
+			insert into Lop values(@MaLop,@TenLop,@Phong,@MaGV)
+		set @Returned =0
+		end
+	return @Returned
+end
+go
+
+go
+declare @y int -- TH2
+exec sp_VD12 'MK04',N'Marketing 03','909','GV05',@y output
+select @y
+go
+declare @y int -- TH1
+exec sp_VD12 'MK04',N'Marketing 03','909','GV010',@y output
+select @y
+go
+declare @y int -- TH3
+exec sp_VD12 'MK06',N'Marketing 09','909','GV05',@y output
+select @y
+go
